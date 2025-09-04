@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useCountries } from 'use-react-countries';
 import './App.css';
 
 const TOTAL_QUESTIONS = 10;
 const OPTIONS_COUNT = 4;
 
 const App = () => {
+  const { countries: fetchedCountries, loading, error } = useCountries();
   const [countries, setCountries] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -14,19 +16,10 @@ const App = () => {
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        if (!response.ok) throw new Error('Error fetching countries');
-        const data = await response.json();
-        setCountries(data.filter((c) => c.flags?.png && c.name?.common));
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    fetchCountries();
-  }, []);
+    if (fetchedCountries && fetchedCountries.length > 0) {
+      setCountries(fetchedCountries.filter((c) => c.flags?.png && c.name?.common));
+    }
+  }, [fetchedCountries]);
 
   const generateQuizQuestions = (countriesData) => {
     const questions = [];
