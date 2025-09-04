@@ -1,0 +1,5 @@
+[
+    {"name": "United States", "flag": "us.png"},
+    {"name": "Canada", "flag": "canada.png"},
+    // ... more countries
+  ]

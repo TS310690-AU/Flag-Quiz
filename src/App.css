@@ -1,0 +1,59 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 20px; /* Gap between flex items */
+}
+
+h1 {
+  text-align: center; /* Centers the text within the h1 */
+  width: 100%; /* Ensures the h1 takes full width */
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.option {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  background-color: blue; /* Default blue */
+  color: white; /* White text for better contrast */
+}
+.option:hover {
+  background-color: darkblue; /* Darker blue on hover */
+}
+.option:disabled {
+  cursor: default;
+}
+.option.correct {
+  background-color: green;
+}
+.option.incorrect {
+  background-color: red;
+}
+.next-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .options {
+    grid-template-columns: 1fr; /* Single column on smaller screens */
+  }
+}
