@@ -58,7 +58,7 @@ const App = () => {
 
       questions.push({
         id: i + 1,
-        flag: correctCountry.flags.png,
+        flag: correctCountry.flags?.png || correctCountry.flags?.svg,
         correctAnswer: correctCountry.name.common,
         options: shuffledOptions.map((c) => c.name.common),
       });
@@ -130,7 +130,12 @@ const App = () => {
           <img
             src={quizQuestions[currentQuestion].flag}
             alt="Country flag"
-            style={{ width: '200px', height: 'auto' }}
+            style={{ width: '200px', height: 'auto', border: '1px solid #ccc' }}
+            onError={(e) => {
+              console.log('Flag failed to load:', quizQuestions[currentQuestion].flag);
+              e.target.style.display = 'none';
+            }}
+            onLoad={() => console.log('Flag loaded successfully:', quizQuestions[currentQuestion].flag)}
           />
           <div className="options">
             {quizQuestions[currentQuestion].options.map((option) => (
