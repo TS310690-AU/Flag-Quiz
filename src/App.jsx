@@ -17,7 +17,9 @@ const App = () => {
 
   useEffect(() => {
     if (fetchedCountries && fetchedCountries.length > 0) {
-      setCountries(fetchedCountries.filter((c) => c.flags?.png && c.name?.common));
+      // Log the structure to debug
+      console.log('Sample country data:', fetchedCountries[0]);
+      setCountries(fetchedCountries.filter((c) => (c.flags?.png || c.flags?.svg) && c.name?.common));
     }
   }, [fetchedCountries]);
 
@@ -58,7 +60,7 @@ const App = () => {
 
       questions.push({
         id: i + 1,
-        flag: correctCountry.flags?.png || correctCountry.flags?.svg,
+        flag: correctCountry.flags?.png || correctCountry.flags?.svg || correctCountry.flag,
         correctAnswer: correctCountry.name.common,
         options: shuffledOptions.map((c) => c.name.common),
       });
@@ -130,10 +132,10 @@ const App = () => {
           <img
             src={quizQuestions[currentQuestion].flag}
             alt="Country flag"
-            style={{ width: '200px', height: 'auto', border: '1px solid #ccc' }}
+            style={{ width: '200px', height: '133px', border: '1px solid #ccc', objectFit: 'contain' }}
             onError={(e) => {
-              console.log('Flag failed to load:', quizQuestions[currentQuestion].flag);
-              e.target.style.display = 'none';
+              console.error('Flag failed to load:', quizQuestions[currentQuestion].flag);
+              e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEzMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEZsYWc8L3RleHQ+PC9zdmc+';
             }}
             onLoad={() => console.log('Flag loaded successfully:', quizQuestions[currentQuestion].flag)}
           />
