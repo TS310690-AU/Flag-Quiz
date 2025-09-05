@@ -19,7 +19,7 @@ const App = () => {
     if (fetchedCountries && fetchedCountries.length > 0) {
       // Log the structure to debug
       console.log('Sample country data:', fetchedCountries[0]);
-      setCountries(fetchedCountries.filter((c) => (c.flags?.png || c.flags?.svg) && c.name?.common));
+      setCountries(fetchedCountries.filter((c) => c.flag && c.name));
     }
   }, [fetchedCountries]);
 
@@ -30,7 +30,7 @@ const App = () => {
     for (let i = 0; i < Math.min(TOTAL_QUESTIONS, availableCountries.length); i++) {
       // Remove the countries used in previous questions
       const unusedCountries = availableCountries.filter(
-        (country) => !questions.some((q) => q.correctAnswer === country.name.common)
+        (country) => !questions.some((q) => q.correctAnswer === country.name)
       );
 
       // Select a random country for the correct answer
@@ -39,7 +39,7 @@ const App = () => {
 
       // Remove the correct country from available countries to avoid duplicates
       const remainingCountries = unusedCountries.filter(
-        (country) => country.name.common !== correctCountry.name.common
+        (country) => country.name !== correctCountry.name
       );
 
       // Select 3 random incorrect countries
@@ -60,9 +60,9 @@ const App = () => {
 
       questions.push({
         id: i + 1,
-        flag: correctCountry.flags?.png || correctCountry.flags?.svg || correctCountry.flag,
-        correctAnswer: correctCountry.name.common,
-        options: shuffledOptions.map((c) => c.name.common),
+        flag: correctCountry.flag,
+        correctAnswer: correctCountry.name,
+        options: shuffledOptions.map((c) => c.name),
       });
     }
 
