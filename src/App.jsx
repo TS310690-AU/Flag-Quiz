@@ -101,7 +101,7 @@ const App = () => {
     const fetchCountries = async () => {
       try {
         const controller = new AbortController();
-        timeoutId = setTimeout(() => controller.abort(), 15000);
+        timeoutId = setTimeout(() => controller.abort(), 30000);
 
         const response = await fetch('https://restcountries.com/v3.1/all', { 
           signal: controller.signal 
